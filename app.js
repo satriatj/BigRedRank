@@ -5,7 +5,7 @@ const SENTIMENTS = {
   like: { label: "Like", icon: "♥", range: [8, 10] },
   mid: { label: "Mid", icon: "—", range: [5, 7.4] },
   dislike: { label: "Dislike", icon: "×", range: [2, 4.4] },
-  unvisited: { label: "Haven't been", icon: "?", range: null }
+  unvisited: { label: "Haven't been", icon: "?", range: null },
 };
 
 const els = {
@@ -19,7 +19,7 @@ const els = {
   stepClassify: document.querySelector("#stepClassify"),
   stepCompare: document.querySelector("#stepCompare"),
   stepResults: document.querySelector("#stepResults"),
-  stepProgress: document.querySelector("#stepProgress")
+  stepProgress: document.querySelector("#stepProgress"),
 };
 
 let spotsByCategory = {};
@@ -65,7 +65,7 @@ function ensureStateShape() {
   Object.keys(spotsByCategory).forEach((category) => {
     state.categories[category] ??= {
       sentiments: {},
-      comparisons: []
+      comparisons: [],
     };
   });
 }
@@ -191,21 +191,25 @@ function renderClassification() {
                 <strong>${sentiment.label}</strong>
                 <small>${getSentimentHint(key)}</small>
               </button>
-            `
+            `,
           )
           .join("")}
       </div>
     </div>
   `;
 
-  els.experienceScreen.querySelectorAll("[data-sentiment]").forEach((button) => {
-    button.addEventListener("click", () => {
-      categoryState.sentiments[spot.id] = button.dataset.sentiment;
-      categoryState.comparisons = removeInvalidComparisons(categoryState.comparisons);
-      saveState();
-      render();
+  els.experienceScreen
+    .querySelectorAll("[data-sentiment]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        categoryState.sentiments[spot.id] = button.dataset.sentiment;
+        categoryState.comparisons = removeInvalidComparisons(
+          categoryState.comparisons,
+        );
+        saveState();
+        render();
+      });
     });
-  });
 }
 
 function renderComparison() {
@@ -242,12 +246,16 @@ function renderComparison() {
   `;
 
   els.experienceScreen.querySelectorAll("[data-winner]").forEach((button) => {
-    button.addEventListener("click", () => recordComparison(pair, button.dataset.winner));
+    button.addEventListener("click", () =>
+      recordComparison(pair, button.dataset.winner),
+    );
   });
 
-  els.experienceScreen.querySelector("[data-tie]").addEventListener("click", () => {
-    recordComparison(pair, null);
-  });
+  els.experienceScreen
+    .querySelector("[data-tie]")
+    .addEventListener("click", () => {
+      recordComparison(pair, null);
+    });
 }
 
 function comparisonCard(spot, side) {
@@ -288,11 +296,13 @@ function renderResults() {
     </div>
   `;
 
-  els.experienceScreen.querySelector("[data-refine]").addEventListener("click", () => {
-    getCategoryState().comparisons = [];
-    saveState();
-    render();
-  });
+  els.experienceScreen
+    .querySelector("[data-refine]")
+    .addEventListener("click", () => {
+      getCategoryState().comparisons = [];
+      saveState();
+      render();
+    });
 }
 
 function renderLeaderboard() {
@@ -308,7 +318,9 @@ function renderLeaderboard() {
   ranking.forEach((spot, index) => {
     const sentiment = getCategoryState().sentiments[spot.id];
     const item = document.createElement("li");
-    item.className = sentiment ? "leaderboard-item modeled" : "leaderboard-item";
+    item.className = sentiment
+      ? "leaderboard-item modeled"
+      : "leaderboard-item";
     item.innerHTML = `
       <span class="rank-number">${index + 1}</span>
       <div class="rank-copy">
@@ -341,7 +353,7 @@ function recordComparison(pair, winnerId) {
   getCategoryState().comparisons.push({
     a: pair[0].id,
     b: pair[1].id,
-    winner: winnerId
+    winner: winnerId,
   });
   saveState();
   render();
@@ -357,10 +369,12 @@ function getStage() {
 
 function getNextComparison() {
   const answered = new Set(
-    getCategoryState().comparisons.map(({ a, b }) => pairKey(a, b))
+    getCategoryState().comparisons.map(({ a, b }) => pairKey(a, b)),
   );
 
-  return getAllPairs().find(([a, b]) => !answered.has(pairKey(a.id, b.id))) ?? null;
+  return (
+    getAllPairs().find(([a, b]) => !answered.has(pairKey(a.id, b.id))) ?? null
+  );
 }
 
 function getAllPairs() {
@@ -373,7 +387,7 @@ function getAllPairs() {
     }
 
     const group = getCurrentSpots().filter(
-      (spot) => categoryState.sentiments[spot.id] === sentiment
+      (spot) => categoryState.sentiments[spot.id] === sentiment,
     );
 
     for (let i = 0; i < group.length; i += 1) {
@@ -389,12 +403,14 @@ function getAllPairs() {
 function getComparisonProgress() {
   return {
     done: getCategoryState().comparisons.length,
-    total: getAllPairs().length
+    total: getAllPairs().length,
   };
 }
 
 function removeInvalidComparisons(comparisons) {
-  const validPairs = new Set(getAllPairs().map(([a, b]) => pairKey(a.id, b.id)));
+  const validPairs = new Set(
+    getAllPairs().map(([a, b]) => pairKey(a.id, b.id)),
+  );
   return comparisons.filter(({ a, b }) => validPairs.has(pairKey(a, b)));
 }
 
@@ -412,10 +428,10 @@ function calculateRanking() {
     }
 
     const group = getCurrentSpots().filter(
-      (item) => categoryState.sentiments[item.id] === sentiment
+      (item) => categoryState.sentiments[item.id] === sentiment,
     );
     const comparisons = categoryState.comparisons.filter(
-      ({ a, b }) => a === spot.id || b === spot.id
+      ({ a, b }) => a === spot.id || b === spot.id,
     );
     const points = comparisons.reduce((total, comparison) => {
       if (comparison.winner === spot.id) return total + 1;
@@ -431,7 +447,7 @@ function calculateRanking() {
       : group.length > 1
         ? (points + 1) / (group.length + 1)
         : 0.5;
-    const personalScore = minimum + ratio * (maximum - minimum);
+    const personalScore = String(minimum + ratio * (maximum - minimum));
     const confidence =
       group.length > 1
         ? Math.round(55 + (comparisons.length / (group.length - 1)) * 40)
@@ -439,14 +455,18 @@ function calculateRanking() {
 
     return {
       ...spot,
-      personalScore: personalScore,
-      confidence: Math.min(confidence, 95)
+      personalScore,
+      confidence: Math.min(confidence, 95),
     };
   });
 
   return spots.sort((a, b) => {
     if (a.personalScore !== null && b.personalScore !== null) {
-      return String(b.personalScore).localeCompare(String(a.personalScore)) || b.averageUserScore - a.averageUserScore;
+      if (a.personalScore === b.personalScore) {
+        return b.averageUserScore - a.averageUserScore;
+      }
+
+      return a.personalScore < b.personalScore ? 1 : -1;
     }
     if (a.personalScore !== null) return -1;
     if (b.personalScore !== null) return 1;
