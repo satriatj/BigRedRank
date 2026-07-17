@@ -3,56 +3,83 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An AI-assisted personal ranking demo for Cornell libraries and buildings."
+    />
     <title>Big Red Rank</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="app-shell">
-      <section class="hero">
-        <p class="eyebrow">Cornell spot rankings</p>
-        <h1>Big Red Rank</h1>
-        <p class="hero-copy">
-          Build your personal Cornell map like Beli: pick a spot, rate it from
-          1-10, and compare your rankings against the demo average user score.
-        </p>
-      </section>
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Your Cornell, ranked</p>
+          <h1>Big Red<br />Rank</h1>
+        </div>
+        <div class="hero-intro">
+          <span class="ai-pill"><i></i> Preference engine online</span>
+          <p>
+            No arbitrary numbers. Tell us what you like, then make a few quick
+            choices. Our preference model turns your taste into a personal ranking.
+          </p>
+        </div>
+      </header>
 
       <section class="controls" aria-label="Ranking controls">
         <div>
-          <p class="section-label">Category</p>
+          <p class="section-label">Explore</p>
           <div class="category-tabs" id="categoryTabs"></div>
         </div>
         <button class="ghost-button" id="resetButton" type="button">
-          Reset demo rankings
+          Start over
         </button>
       </section>
 
-      <section class="rating-card" aria-live="polite">
-        <div class="rating-heading">
-          <div>
-            <p class="section-label">Rate a spot</p>
-            <h2 id="selectedSpotName">Pick a spot</h2>
+      <section class="model-card">
+        <div class="model-icon" aria-hidden="true">✦</div>
+        <div>
+          <p class="section-label">How the model works</p>
+          <p>
+            First, sort each spot into <strong>Like</strong>, <strong>Mid</strong>,
+            or <strong>Dislike</strong>. Then resolve close calls head-to-head.
+            Scores and confidence update after every answer.
+          </p>
+        </div>
+        <div class="model-stat">
+          <strong id="modelConfidence">0%</strong>
+          <span>taste confidence</span>
+        </div>
+      </section>
+
+      <section class="experience-card" aria-live="polite">
+        <div class="stepper">
+          <div class="step active" id="stepClassify">
+            <span>1</span>
+            <div><strong>First impression</strong><small>Like, mid, or dislike</small></div>
           </div>
-          <p id="ratingMeta">0 spots rated</p>
+          <div class="step-line"><i id="stepProgress"></i></div>
+          <div class="step" id="stepCompare">
+            <span>2</span>
+            <div><strong>Head-to-head</strong><small>Refine your order</small></div>
+          </div>
+          <div class="step-line"><i></i></div>
+          <div class="step" id="stepResults">
+            <span>3</span>
+            <div><strong>Your ranking</strong><small>AI-inferred scores</small></div>
+          </div>
         </div>
 
-        <div class="rating-layout">
-          <aside class="spot-picker" id="spotPicker"></aside>
-
-          <article class="selected-spot" id="selectedSpot"></article>
-        </div>
-
-        <div class="rating-scale" id="ratingScale" aria-label="Rating scale">
-        </div>
+        <div id="experienceScreen"></div>
       </section>
 
       <section class="leaderboard-card">
         <div class="leaderboard-heading">
           <div>
-            <p class="section-label">Leaderboard</p>
+            <p class="section-label">Your taste profile</p>
             <h2 id="leaderboardTitle">Libraries</h2>
           </div>
-          <p id="leaderboardMeta">Sorted by score</p>
+          <p id="leaderboardMeta">Classify spots to build your ranking</p>
         </div>
         <ol class="leaderboard" id="leaderboard"></ol>
       </section>
