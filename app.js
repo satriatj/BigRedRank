@@ -176,7 +176,7 @@ function renderClassification() {
           </div>
           <div class="community-note">
             <span>Community average</span>
-            <strong>${formatScore(spot.averageUserScore)}</strong>
+            <strong>${spot.averageUserScore}</strong>
             <small>${spot.reviewCount ?? 0} demo reviews</small>
           </div>
         </div>
@@ -258,7 +258,7 @@ function comparisonCard(spot, side) {
       <h3>${spot.name}</h3>
       <p>${spot.description}</p>
       <div class="comparison-footer">
-        <span>Community ${formatScore(spot.averageUserScore)}</span>
+        <span>Community ${spot.averageUserScore}</span>
         <strong>Choose this spot →</strong>
       </div>
     </button>
@@ -280,7 +280,7 @@ function renderResults() {
         and ${getCategoryState().comparisons.length} head-to-head decisions.
       </p>
       <div class="result-stats">
-        <div><strong>${formatScore(topSpot?.personalScore)}</strong><span>top score</span></div>
+        <div><strong>${topSpot?.personalScore ?? "—"}</strong><span>top score</span></div>
         <div><strong>${getOverallConfidence()}%</strong><span>confidence</span></div>
         <div><strong>${getCategoryState().comparisons.length}</strong><span>comparisons</span></div>
       </div>
@@ -316,10 +316,10 @@ function renderLeaderboard() {
           <strong>${spot.name}</strong>
           ${sentiment ? `<span class="sentiment-chip ${sentiment}">${SENTIMENTS[sentiment].label}</span>` : ""}
         </div>
-        <p>${spot.area} · Community ${formatScore(spot.averageUserScore)}</p>
+        <p>${spot.area} · Community ${spot.averageUserScore}</p>
       </div>
       <div class="leaderboard-scores">
-        <span class="score">${spot.personalScore ? formatScore(spot.personalScore) : "—"}</span>
+        <span class="score">${spot.personalScore ?? "—"}</span>
         <small>${
           sentiment === "unvisited"
             ? "not visited"
@@ -432,14 +432,14 @@ function calculateRanking() {
 
     return {
       ...spot,
-      personalScore: Math.round(personalScore * 10) / 10,
+      personalScore: personalScore,
       confidence: Math.min(confidence, 95)
     };
   });
 
   return spots.sort((a, b) => {
     if (a.personalScore !== null && b.personalScore !== null) {
-      return b.personalScore - a.personalScore || b.averageUserScore - a.averageUserScore;
+      return String(b.personalScore).localeCompare(String(a.personalScore)) || b.averageUserScore - a.averageUserScore;
     }
     if (a.personalScore !== null) return -1;
     if (b.personalScore !== null) return 1;
@@ -483,10 +483,6 @@ function getSentimentHint(sentiment) {
   if (sentiment === "mid") return "It's fine, not special";
   if (sentiment === "dislike") return "I'd rather go elsewhere";
   return "Save it for later";
-}
-
-function formatScore(score) {
-  return Number(score ?? 0).toFixed(1);
 }
 
 function formatCategory(category) {
