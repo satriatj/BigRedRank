@@ -447,7 +447,7 @@ function calculateRanking() {
       : group.length > 1
         ? (points + 1) / (group.length + 1)
         : 0.5;
-    const personalScore = String(minimum + ratio * (maximum - minimum));
+    const personalScore = minimum + ratio * (maximum - minimum);
     const confidence =
       group.length > 1
         ? Math.round(55 + (comparisons.length / (group.length - 1)) * 40)
@@ -455,7 +455,7 @@ function calculateRanking() {
 
     return {
       ...spot,
-      personalScore,
+      personalScore: personalScore,
       confidence: Math.min(confidence, 95),
     };
   });
@@ -466,7 +466,7 @@ function calculateRanking() {
         return b.averageUserScore - a.averageUserScore;
       }
 
-      return a.personalScore < b.personalScore ? 1 : -1;
+      return String(a.personalScore) < String(b.personalScore) ? 1 : -1;
     }
     if (a.personalScore !== null) return -1;
     if (b.personalScore !== null) return 1;
