@@ -431,7 +431,7 @@ h1 {
 
 .sentiment-actions {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   gap: 10px;
 }
 
@@ -483,6 +483,11 @@ h1 {
 .sentiment-button.dislike > span {
   color: var(--red);
   background: var(--red-soft);
+}
+
+.sentiment-button.unvisited > span {
+  color: #5d6170;
+  background: #eef0f4;
 }
 
 .sentiment-button:hover {
@@ -731,6 +736,11 @@ h1 {
   background: #fff5df;
 }
 
+.sentiment-chip.unvisited {
+  color: #5d6170;
+  background: #eef0f4;
+}
+
 .leaderboard-scores {
   text-align: right;
 }
@@ -766,7 +776,7 @@ h1 {
   }
 
   .sentiment-actions {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: none;
   }
 

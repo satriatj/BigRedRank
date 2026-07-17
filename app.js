@@ -4,7 +4,8 @@ const STORAGE_KEY = "big-red-rank-preferences-v3";
 const SENTIMENTS = {
   like: { label: "Like", icon: "♥", range: [8, 9.8] },
   mid: { label: "Mid", icon: "—", range: [5, 7.4] },
-  dislike: { label: "Dislike", icon: "×", range: [2, 4.4] }
+  dislike: { label: "Dislike", icon: "×", range: [2, 4.4] },
+  unvisited: { label: "Haven't been", icon: "?", range: null }
 };
 
 const els = {
@@ -319,7 +320,13 @@ function renderLeaderboard() {
       </div>
       <div class="leaderboard-scores">
         <span class="score">${spot.personalScore ? formatScore(spot.personalScore) : "—"}</span>
-        <small>${spot.confidence ? `${spot.confidence}% confident` : "not modeled"}</small>
+        <small>${
+          sentiment === "unvisited"
+            ? "not visited"
+            : spot.confidence
+              ? `${spot.confidence}% confident`
+              : "not modeled"
+        }</small>
       </div>
     `;
     els.leaderboard.append(item);
@@ -361,6 +368,10 @@ function getAllPairs() {
   const pairs = [];
 
   Object.keys(SENTIMENTS).forEach((sentiment) => {
+    if (!SENTIMENTS[sentiment].range) {
+      return;
+    }
+
     const group = getCurrentSpots().filter(
       (spot) => categoryState.sentiments[spot.id] === sentiment
     );
@@ -393,6 +404,10 @@ function calculateRanking() {
     const sentiment = categoryState.sentiments[spot.id];
 
     if (!sentiment) {
+      return { ...spot, personalScore: null, confidence: 0 };
+    }
+
+    if (!SENTIMENTS[sentiment].range) {
       return { ...spot, personalScore: null, confidence: 0 };
     }
 
@@ -466,7 +481,8 @@ function pairKey(a, b) {
 function getSentimentHint(sentiment) {
   if (sentiment === "like") return "I'd seek it out";
   if (sentiment === "mid") return "It's fine, not special";
-  return "I'd rather go elsewhere";
+  if (sentiment === "dislike") return "I'd rather go elsewhere";
+  return "Save it for later";
 }
 
 function formatScore(score) {

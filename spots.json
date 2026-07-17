@@ -35,6 +35,51 @@
       "averageUserScore": 8.9,
       "reviewCount": 126,
       "tags": ["Quiet", "Serious", "Beautiful interior"]
+    },
+    {
+      "id": "engineering-library",
+      "name": "Engineering Library",
+      "area": "Carpenter Hall",
+      "description": "A musty, small library option for locking in",
+      "averageUserScore": 7.4,
+      "reviewCount": 110,
+      "tags": ["Quiet", "Serious", "Modern"]
+    },
+    {
+      "id": "mathematics-library",
+      "name": "Mathematics Library",
+      "area": "Mallot Hall",
+      "description": "A medium-sized library option that is a hidden gem",
+      "averageUserScore": 8.5,
+      "reviewCount": 132,
+      "tags": ["Quiet", "Monitors", "Group tables"]
+    },
+    {
+      "id": "music-library",
+      "name": "Music Library",
+      "area": "Lincoln Hall",
+      "description": "A medium-sized near North Campus with a lot of natural light",
+      "averageUserScore": 9.2,
+      "reviewCount": 115,
+      "tags": ["Quiet", "Monitors", "Natural light"]
+    },
+    {
+      "id": "catherwood-library",
+      "name": "Catherwood Library",
+      "area": "Ives Hall",
+      "description": "A perfect library option for getting work done and has a dedicated 24/7 study space",
+      "averageUserScore": 8.7,
+      "reviewCount": 115,
+      "tags": ["Large", "Monitors", "All day study space"]
+    },
+    {
+      "id": "veter-library",
+      "name": "Vet Library",
+      "area": "Ives Hall",
+      "description": "Large spacious library with a lot of couches and a lot of natural light",
+      "averageUserScore": 9.4,
+      "reviewCount": 115,
+      "tags": ["Large", "Monitors", "All day study space"]
     }
   ],
   "buildings": [
