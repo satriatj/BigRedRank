@@ -288,7 +288,7 @@ function renderResults() {
         and ${getCategoryState().comparisons.length} head-to-head decisions.
       </p>
       <div class="result-stats">
-        <div><strong>${topSpot?.personalScore ?? "—"}</strong><span>top score</span></div>
+        <div><strong>${formatScore(topSpot?.personalScore)}</strong><span>top score</span></div>
         <div><strong>${getOverallConfidence()}%</strong><span>confidence</span></div>
         <div><strong>${getCategoryState().comparisons.length}</strong><span>comparisons</span></div>
       </div>
@@ -331,7 +331,7 @@ function renderLeaderboard() {
         <p>${spot.area} · Community ${spot.averageUserScore}</p>
       </div>
       <div class="leaderboard-scores">
-        <span class="score">${spot.personalScore ?? "—"}</span>
+        <span class="score">${formatScore(spot.personalScore)}</span>
         <small>${
           sentiment === "unvisited"
             ? "not visited"
@@ -466,6 +466,7 @@ function calculateRanking() {
         return b.averageUserScore - a.averageUserScore;
       }
 
+      // Demo beat 2 (Cmd K): sort numerically instead of by string
       return String(a.personalScore) < String(b.personalScore) ? 1 : -1;
     }
     if (a.personalScore !== null) return -1;
@@ -510,6 +511,12 @@ function getSentimentHint(sentiment) {
   if (sentiment === "mid") return "It's fine, not special";
   if (sentiment === "dislike") return "I'd rather go elsewhere";
   return "Save it for later";
+}
+
+// Demo beat 1 (Tab): replace String(score) with score.toFixed(1)
+function formatScore(score) {
+  if (score == null) return "—";
+  return String(score);
 }
 
 function formatCategory(category) {
