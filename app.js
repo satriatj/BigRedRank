@@ -423,7 +423,14 @@ function calculateRanking() {
       return total;
     }, 0);
     const [minimum, maximum] = SENTIMENTS[sentiment].range;
-    const ratio = group.length > 1 ? (points + 1) / (group.length + 1) : 0.5;
+    const isPerfectLike =
+      sentiment === "like" &&
+      (group.length === 1 || points === group.length - 1);
+    const ratio = isPerfectLike
+      ? 1
+      : group.length > 1
+        ? (points + 1) / (group.length + 1)
+        : 0.5;
     const personalScore = minimum + ratio * (maximum - minimum);
     const confidence =
       group.length > 1
