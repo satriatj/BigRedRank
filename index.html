@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Big Red Rank</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Cornell spot rankings</p>
+        <h1>Big Red Rank</h1>
+        <p class="hero-copy">
+          Build your personal Cornell map like Beli: pick a spot, rate it from
+          1-10, and compare your rankings against the demo average user score.
+        </p>
+      </section>
+
+      <section class="controls" aria-label="Ranking controls">
+        <div>
+          <p class="section-label">Category</p>
+          <div class="category-tabs" id="categoryTabs"></div>
+        </div>
+        <button class="ghost-button" id="resetButton" type="button">
+          Reset demo rankings
+        </button>
+      </section>
+
+      <section class="rating-card" aria-live="polite">
+        <div class="rating-heading">
+          <div>
+            <p class="section-label">Rate a spot</p>
+            <h2 id="selectedSpotName">Pick a spot</h2>
+          </div>
+          <p id="ratingMeta">0 spots rated</p>
+        </div>
+
+        <div class="rating-layout">
+          <aside class="spot-picker" id="spotPicker"></aside>
+
+          <article class="selected-spot" id="selectedSpot"></article>
+        </div>
+
+        <div class="rating-scale" id="ratingScale" aria-label="Rating scale">
+        </div>
+      </section>
+
+      <section class="leaderboard-card">
+        <div class="leaderboard-heading">
+          <div>
+            <p class="section-label">Leaderboard</p>
+            <h2 id="leaderboardTitle">Libraries</h2>
+          </div>
+          <p id="leaderboardMeta">Sorted by score</p>
+        </div>
+        <ol class="leaderboard" id="leaderboard"></ol>
+      </section>
+    </main>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

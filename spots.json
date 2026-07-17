@@ -1,0 +1,78 @@
+{
+  "libraries": [
+    {
+      "id": "uris-library",
+      "name": "Uris Library",
+      "area": "Central Campus",
+      "description": "Classic Cornell study spot with stacks, views, and late-night energy.",
+      "averageUserScore": 8.7,
+      "reviewCount": 238,
+      "tags": ["Iconic", "Quiet corners", "Clocktower views"]
+    },
+    {
+      "id": "olin-library",
+      "name": "Olin Library",
+      "area": "Arts Quad",
+      "description": "Big central library with lots of seating and a reliable study grind feel.",
+      "averageUserScore": 8.2,
+      "reviewCount": 194,
+      "tags": ["Central", "Research", "Group tables"]
+    },
+    {
+      "id": "mann-library",
+      "name": "Mann Library",
+      "area": "Ag Quad",
+      "description": "Bright, polished study space with a calmer atmosphere and strong natural light.",
+      "averageUserScore": 9.1,
+      "reviewCount": 171,
+      "tags": ["Natural light", "Modern", "Cafe nearby"]
+    },
+    {
+      "id": "law-library",
+      "name": "Law Library",
+      "area": "Myron Taylor Hall",
+      "description": "A quieter, more formal library option for focused work sessions.",
+      "averageUserScore": 8.9,
+      "reviewCount": 126,
+      "tags": ["Quiet", "Serious", "Beautiful interior"]
+    }
+  ],
+  "buildings": [
+    {
+      "id": "willard-straight-hall",
+      "name": "Willard Straight Hall",
+      "area": "Ho Plaza",
+      "description": "Student-life hub with food, events, lounges, and prime campus location.",
+      "averageUserScore": 8.4,
+      "reviewCount": 211,
+      "tags": ["Student life", "Food", "Central"]
+    },
+    {
+      "id": "statler-hall",
+      "name": "Statler Hall",
+      "area": "Central Campus",
+      "description": "Busy, polished academic building with hotel-school energy and good gathering spaces.",
+      "averageUserScore": 7.8,
+      "reviewCount": 143,
+      "tags": ["Polished", "Busy", "Food nearby"]
+    },
+    {
+      "id": "duffield-hall",
+      "name": "Duffield Hall",
+      "area": "Engineering Quad",
+      "description": "Glassy engineering hub with open seating, project energy, and lots of foot traffic.",
+      "averageUserScore": 8.6,
+      "reviewCount": 189,
+      "tags": ["Engineering", "Open space", "Modern"]
+    },
+    {
+      "id": "goldwin-smith-hall",
+      "name": "Goldwin Smith Hall",
+      "area": "Arts Quad",
+      "description": "Arts Quad staple with lecture halls, older architecture, and classic campus feel.",
+      "averageUserScore": 7.9,
+      "reviewCount": 132,
+      "tags": ["Arts Quad", "Classic", "Humanities"]
+    }
+  ]
+}
